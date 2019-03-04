@@ -25,5 +25,6 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://i.imgur.com/uFOW2kP.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 <img src='https://i.imgur.com/u2ZM6vn.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+https://i.imgur.com/u2ZM6vn.gif
 <img src='https://i.imgur.com/VV0IX9c.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
