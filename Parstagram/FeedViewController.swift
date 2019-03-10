@@ -17,61 +17,91 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var posts = [PFObject]()
 
     let refreshController = UIRefreshControl()
-
+    
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return posts.count
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let post = posts[section]
         let comments = (post["comments"] as? [PFObject]) ?? []
         
-        
         return comments.count + 1
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return posts.count
-    }
+  
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
-        let post = posts[indexPath.row]
+        let post = posts[indexPath.section]
+        let comments = (post["comments"] as? [PFObject]) ?? []
         
-        let user = post["author"] as! PFUser
-        cell.usernameLabel.text = user.username
-        cell.captionLabel.text = post["caption"] as? String
+        if indexPath.row == 0 {
+            
         
-        let imageFile = post["image"] as! PFFileObject
-        let urlString = imageFile.url!
-        let url = URL(string: urlString)!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+           
+            
+            let user = post["author"] as! PFUser
+            cell.usernameLabel.text = user.username
+            cell.captionLabel.text = post["caption"] as? String
+            
+            let imageFile = post["image"] as! PFFileObject
+            let urlString = imageFile.url!
+            let url = URL(string: urlString)!
+            
+            cell.photoView.af_setImage(withURL: url)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+            
+            let comment = comments[indexPath.row - 1]
+            cell.commentLabel.text = comment["text"] as? String
+            
+            let user = comment["author"] as! PFUser
+            cell.nameLabel.text = user.username
+            
+            return cell
+        }
         
-        cell.photoView.af_setImage(withURL: url)
         
-        return cell
+    	
         
     }
-    
- 
-    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadPosts()
-        self.refreshController.addTarget(self, action: #selector(loadPosts), for: .valueChanged)
-        self.tableView.refreshControl = refreshController
+//
+//        print("start: loadposts")
+       
+        
+
+      
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.refreshController.addTarget(self, action: #selector(loadPosts), for: .valueChanged)
+        self.tableView.refreshControl = refreshController
+        
+         self.loadPosts()
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.loadPosts()
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        print("start: loadposts")
+//        self.loadPosts()
+//        print("end: loadposts")
+//    }
     
     @objc func loadPosts() {
-        numberOfPosts = 4
+        numberOfPosts = 8
         let query = PFQuery(className: "Posts")
-        query.includeKey("author")
+        query.includeKeys(["author", "comments", "comments", "comments.author"])
         query.limit = numberOfPosts
         query.findObjectsInBackground { (posts, error) in
             if posts != nil {
@@ -84,8 +114,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func loadMorePosts() {
         numberOfPosts *= 2
+        print("doubling posts...")
         let query = PFQuery(className: "Posts")
-        query.includeKey("author")
+        query.includeKeys(["author", "comments", "comments", "comments.author"])
         query.limit = numberOfPosts
         query.findObjectsInBackground { (posts, error) in
             if posts != nil {
@@ -96,7 +127,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == numberOfPosts {
+        if indexPath.section + 1 == numberOfPosts {
             loadMorePosts()
         }
     }
@@ -116,7 +147,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let post = posts[indexPath.row]
+        let post = posts[indexPath.section]
+        print("post indexpath.sec: \(indexPath.section)")
         let comment = PFObject(className: "Comments")
         comment["text"] = "This is a random comment"
         comment["post"] = post
