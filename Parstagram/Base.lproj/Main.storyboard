@@ -197,6 +197,28 @@
                                             <outlet property="nameLabel" destination="FPK-q1-h54" id="jTe-1b-sA6"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddCommentCell" id="OBZ-P9-7Qa">
+                                        <rect key="frame" x="0.0" y="468" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OBZ-P9-7Qa" id="B0g-lf-htt">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a comment..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zau-P3-idD">
+                                                    <rect key="frame" x="16" y="8" width="351" height="27.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zau-P3-idD" firstAttribute="leading" secondItem="B0g-lf-htt" secondAttribute="leading" constant="16" id="9uA-Vg-5jp"/>
+                                                <constraint firstAttribute="bottom" secondItem="zau-P3-idD" secondAttribute="bottom" constant="8" id="JIN-fl-JVQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="zau-P3-idD" secondAttribute="trailing" constant="8" id="ZNl-PN-TLo"/>
+                                                <constraint firstItem="zau-P3-idD" firstAttribute="top" secondItem="B0g-lf-htt" secondAttribute="top" constant="8" id="ciB-jE-Igl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
