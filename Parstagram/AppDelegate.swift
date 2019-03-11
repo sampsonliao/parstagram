@@ -16,15 +16,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+        print("initialize")
         Parse.initialize(
             with: ParseClientConfiguration(block: { (configuration: ParseMutableClientConfiguration) -> Void in
                 configuration.applicationId = "Parstagram"
                 configuration.server = "https://sliao-parstagram.herokuapp.com/parse"
             })
         )
-        
-        
+        print("start: check if current user exists")
+
+        if PFUser.current() != nil {
+            let main = UIStoryboard(name: "Main", bundle: nil)
+            let feedNavigationController = main.instantiateViewController(withIdentifier: "FeedNavigationController")
+            window?.rootViewController = feedNavigationController
+        }
+        print("end: check if current user exists")
         return true
     }
 
