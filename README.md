@@ -54,8 +54,10 @@ The following **bonus** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 Stay logged in, log out
+
 <img src='https://i.imgur.com/ndQMPf8.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 View comments, add comments
+
 <img src='https://i.imgur.com/Z6elof9.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
